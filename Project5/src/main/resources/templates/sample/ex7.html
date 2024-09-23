@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>조건문</h1>
+
+	<!-- th:if를 사용하여 조건이 참일때만 해당 태그를 생성  -->
+	<p th:if=" 10%2 == 1">10은 짝수 입니다</p>
+
+	<!-- th:unless를 사용하여 조건이 거짓일때만 해당 태그를 생성 -->
+	<p th:unless="10%2 == 1">10은 짝수가 아닙니다</p>
+
+	<!-- 삼항 연산자를 사용하여 조건에 따라 다른 값을 출력
+		 삼항 연산자는 별도의 속성을 사용하지 않고, th:text 속성에 식을 작성
+	 -->
+	<h1>삼항 연산자</h1>
+	<p th:text=" 9%2==0 ? '짝수' : '홀수'"></p>
+
+	<!-- th:block: html 태그 없이 제어문을 쓸 때 사용 -->
+	<th:block th:each="dto : ${list}">
+		<p th:text="${dto.no==2} ? ${dto}:-- "></p>
+	</th:block>
+	
+	<!-- if와 unless를 각각 사용하여, 조건에 따라 다른값을 출력 -->
+	<th:block th:each="dto : ${list}">
+	[[${dto.no}]]
+		<p th:if="${dto.no==2}">[[${dto}]]</p>
+		<p th:unless="${dto.no==2}">--</p>
+	</th:block>
+</body>
+</html>
