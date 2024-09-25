@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/method/q")
-public class QuizController {
+public class QuizController1 {
 	@ResponseBody
 	@GetMapping
 	public String getmethod() {
