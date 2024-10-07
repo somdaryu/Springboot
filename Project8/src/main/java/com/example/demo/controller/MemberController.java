@@ -16,38 +16,40 @@ import com.example.demo.service.MemberService;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+
 	@Autowired
-	MemberService service;
-	
-	//목록 화면을 반환하는 메소드
-	// /member/list
-	// /member/list?page=1
-	// /member/list?page=2
+	private MemberService service;
+
+	// 목록 화면을 반환하는 메소드
 	@GetMapping("/list")
-	public void list(@RequestParam(defaultValue = "0", name = "page")int page, Model model) {
+	public void list(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 		Page<MemberDTO> list = service.getList(page);
-		model.addAttribute("list", list);
+		model.addAttribute("list", list);	
 	}
 	
-	//등록화면을 반환하는 메소드
 	@GetMapping("/register")
 	public void register() {
-		
 	}
-	
-	//회원을 등록하는 메소드
-	@PostMapping("/register")
+
+	@PostMapping("/register") //dto: 파라미터, redirectAttributes: 모델 객체
 	public String registerPost(MemberDTO dto, RedirectAttributes redirectAttributes) {
-		
-		boolean result = service.register(dto);
-		
-		if(result) {
-			// 회원가입에 성공했으면 목록화면으로 이동
-			return "redirect:/member/list";
+
+		boolean isSuccess = service.register(dto);
+
+		if(isSuccess) {
+			return "redirect:/member/list"; //성공시 목록화면으로 이동
 		}else {
 			redirectAttributes.addFlashAttribute("msg", "아이디가 중복되어 등록에 실패하였습니다");
-			return "redirect:/member/register";
+			return "redirect:/member/register"; //실패시 회원가입폼으로 이동
 		}
+
 	}
-	
+
+	@GetMapping("/read")
+	public void read(@RequestParam(name = "id") String id, @RequestParam(name = "page", defaultValue = "0") int page, Model model) { //파라미터 추가
+		MemberDTO dto = service.read(id);
+		model.addAttribute("dto", dto); //사용자 정보
+		model.addAttribute("page", page); //페이지번호 (화면을 이동해도 페이지번호를 유지하기 위해서)
+	}
+
 }

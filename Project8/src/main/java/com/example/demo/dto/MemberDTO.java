@@ -12,13 +12,19 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class MemberDTO {
-	String id;
-	String password;
-	String name;
-	LocalDateTime regDate;
-	LocalDateTime modDate;
+
+    String id; //아이디
+
+    String password; //패스워드
+
+    String name; //이름
+
+    LocalDateTime regDate; //등록일
+
+    LocalDateTime modDate; //수정일
+
 }
