@@ -1,0 +1,30 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.CommentDTO;
+import com.example.demo.service.CommentService;
+
+@RestController //@Controller + @ResponseBody(json형식으로 변환)
+@RequestMapping("/comment")
+public class CommentController {
+	
+	@Autowired
+	CommentService service;
+
+	//게시물별 댓글 목록 조회
+	@GetMapping("/list")
+	public List<CommentDTO> list(@RequestParam(name = "boardNo") int boardNo) {
+		// 게시물 기준으로 댓글 목록 조회
+		List<CommentDTO> commentlist = service.getListByBoardNo(boardNo);
+		// 댓글 목록 반환
+		return commentlist;
+	}
+	
+}
